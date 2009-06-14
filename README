@@ -1,0 +1,54 @@
+jQuery Clusting Plugin - By Vangelis Tsoumenis
+===================================================================
+
+
+This plugin takes a List (i.e an unordered List) with positioned (via css) elements and clusters them by proximity.
+
+This is way alpha!
+
+Usage 
+------------------------------------------------------------------
+
+
+HTML:
+
+<ul id="mymap"> 
+  <li style="left:1.2em; top:1emi;">Marker 1</li>
+  <li style="left:0.3em; top:1.4em;">Marker 2</li>
+  <li style="left:2.3em; top:1.7em;">Marker 3</li>
+</ul> 
+
+CSS:
+
+ul#mymap {
+  position:relative; 
+} 
+
+ul#mymap li {
+  position:absolute;
+}
+
+JAVASCRIPT: 
+
+$(document).ready(function(){
+  $('ul#mymap').cluster();
+});
+
+
+Options: 
+------------------------------------------------------------------
+  radius (2.3) 
+  Max. proximity of a marker to a clusters center to be included in the cluster.
+
+  distance_func 
+  The function to calculate the distance between two objects.
+  
+  marker_image 
+  image src for a marker
+
+  .... a lot missing here ... 
+
+
+
+
+

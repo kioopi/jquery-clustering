@@ -1,0 +1,10 @@
+
+  * The creation of marker objects in collect_markers needs revisiting. Some more flexibility in gathering the info should be introduced.
+
+  * Dito for the creation of bunch-objects in cluster. Some form of prototype-based aproach comes to mind since these objects contain functions. 
+
+  * differnet images for markers (ie. based on type) could be supported
+
+  * also different images based on how many markers are clustered should be standard functionality
+
+  * the markers collected in a bunch should be appended to the bunch's node as an ul, to enable interactivity down the way.
