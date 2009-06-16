@@ -37,17 +37,30 @@ $(document).ready(function(){
 
 Options: 
 ------------------------------------------------------------------
-  radius (2.3) 
+  * radius (2.3) 
   Max. proximity of a marker to a clusters center to be included in the cluster.
 
-  distance_func 
+  * distance_func 
   The function to calculate the distance between two objects.
   
-  marker_image 
+  * marker_image 
   image src for a marker
+
+  * repesentation
 
   .... a lot missing here ... 
 
+
+How to alter the appearance of bunches on the Map?
+-------------------------------------------------------------------
+
+The bunches are positioned by jquery-clustering. The positioned Dom-Nodes (usually <li>s) don't contain style information apart from position. 
+
+To control the representation of a bunch functions that act on the Dom-Node will be called by jquery-clustering.  Each function will be passed the dom-node representing the bunch as the first argument and the actuall bunch object as the second argument. 
+The functions that are called are the ones in the array $.fn.clusters.default.representation. 
+
+There are a couple of representation-functions in $.fn.clusters.bunchfuncs
+Put them into $.fn.clusters.default.representation like in the demo to try them out.
 
 
 

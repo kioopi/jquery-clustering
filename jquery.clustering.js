@@ -88,7 +88,7 @@
         
        var brep = $('<span>');
  
-       $.each($.fn.clusters.defaults.bunch_node_funcs, function(i,func){
+       $.each($.fn.clusters.defaults.representation, function(i,func){
           func(brep, bunch);
        });
  
@@ -116,13 +116,13 @@
  
   /* public functions */
   
-  $.fn.clusters.bunchnode = {
+  $.fn.clusters.bunchfuncs = {
     // the functions in this objects all accept a dom node and a bunch object.
     // the dome node is the positioned element reprsenting the marker on the map
     // the contents of this node can be altered in these functions to customise the representation of the bunch
     // the bunch object is the represented bunch.
     // not all of the functions are called automaticly. the ones to act on the bunchs are listed in the array
-    // $.fn.clusters.defaults.bunch_node_funcs
+    // $.fn.clusters.defaults.representation
 
   style : function(bnode, bobj){
        if(bobj.markers.length>3){
@@ -195,7 +195,10 @@
          4:'xlarge.png',
          6:'xxlarge.png'
       },
-      bunch_node_funcs: [$.fn.clusters.bunchnode.label, $.fn.clusters.bunchnode.style, $.fn.clusters.bunchnode.multi_image]
+
+      // an array of functions that act on the dom-representation of a bunch
+      // 1st arg: dom-node, 2nd arg: bunch-object
+      representation: [$.fn.clusters.bunchfuncs.label, $.fn.clusters.bunchfuncs.style, $.fn.clusters.bunchfuncs.multi_image]
       // [ bunch_pure_css ]
   };
 
