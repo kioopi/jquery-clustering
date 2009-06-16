@@ -25,11 +25,21 @@
        var markers = [];
        ul.find($.fn.clusters.defaults.positioned_subelement).each(function(id){
           var that = $(this);
-          markers.push({ id:id,
-                         x:parseFloat(that.css('left')),
-                         y:-1*parseFloat(that.css('top')),
-                         alt:that.find('img').attr('alt')
-                       });
+          var m = { id:id,
+                    x:parseFloat(that.css('left')),
+                    y:-1*parseFloat(that.css('top'))
+                  }
+
+          // check if there is an img and add its data 
+          var img = that.find('img'); 
+          if(img.length){ 
+             m.img = { 
+                alt : img.attr('alt'),
+                title : img.attr('title'),
+                src : img.attr('src')
+             } 
+          } 
+          markers.push(m);
        });
        return markers;
   }
