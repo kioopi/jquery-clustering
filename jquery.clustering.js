@@ -12,10 +12,12 @@
 *
 */
 (function($){
- 
- 
+
+
   /* private functions */
  
+  
+
   function collect_markers(ul){
        // accepts a jquery object
        // collects data (from ul), returns a list of objects
@@ -35,14 +37,6 @@
        return markers;
   }
  
-  var sum = function(field){
-           // creates the sum of the values of field of all objects
-           var summe = 0;
-           for(var i=0; i<this.markers.length; i++){
-               summe += this.markers[i][field];
-           }
-           return summe;
-  };
  
   function cluster(markers, radius ){
        // interates over markes generates clusters based on priximity
@@ -54,26 +48,21 @@
        var marker = markers[m];
        var bunched = false;
        for(var b=0; b<bunches.length; b++){
-          bunch=bunches[b];
+          var bunch=bunches[b];
           if(dist(marker,bunch)<radius){
-      // add marker to bunch
-      bunch.markers.push(marker);
-      bunch.update_center();
-      bunched = true;
-      break;
+              // add marker to bunch
+              bunch.markers.push(marker);
+              bunch.update_center();
+              bunched = true;
+              break;
           }
        } // endfor bunches
        if(!bunched){
-          bunches.push({
-      markers : [marker],
-      x : marker.x,
-      y : marker.y,
-      sum : sum,
-      update_center : function(){  // FIXME this function should be declared outside of loop
-      this.x = this.sum('x') / this.markers.length;
-      this.y = this.sum('y') / this.markers.length;
-      }
-          });
+          var bunch = new $.fn.clusters.Bunch(); 
+          bunch.markers.push(marker);
+          bunch.x = marker.x;
+          bunch.y = marker.y;
+          bunches.push(bunch);
        }
      } // endfor markers
      return bunches;
@@ -114,7 +103,28 @@
      });
   };
  
+  /* definition of the object Bunch */ 
+  // serves as prototype for bunches
+  $.fn.clusters.Bunch = function(){
+     this.markers = [];
+     this.markers.sum = function(field){
+          // takes the name of a property of a marker and returns 
+          // the field summed up over all elements in Bunch.markers
+         var summe = 0;
+         for(var i=0, j=this.length; i<j; i++){
+             summe += this[i][field];
+         }
+          return summe;
+     };
+  };
+      
+  $.fn.clusters.Bunch.prototype.update_center = function(){  
+      this.x = this.markers.sum('x') / this.markers.length;
+      this.y = this.markers.sum('y') / this.markers.length;
+  }
+
   /* public functions */
+
   
   $.fn.clusters.bunchfuncs = {
     // the functions in this objects all accept a dom node and a bunch object.
@@ -140,11 +150,13 @@
             bnode.css('background', 'url('+$.fn.clusters.defaults.marker_image+') center no-repeat');
        }
   },
+  // a stand-alone representation function for modern browsers
   pure_css : function(bnode, bobj){
        bnode.css({position:'relative', padding:'0.1em 0.4em'});
        bnode.css({ background:'red'});
        bnode.css('border', '1px solid black');
        bnode.css('-moz-border-radius', '1em');
+       bnode.css('-webkit-border-radius', '1em');
        bnode.css('font-size', (1+(bobj.markers.length*0.2))+'em');
        bnode.html(bobj.markers.length);
        return bnode;
@@ -158,6 +170,8 @@
      bnode.append(img);
      return bnode;
   },
+
+  // appends an <img> from bunch_images to the representation 
   multi_image : function(bnode, bobj){
      var img = $('<img>');
      img.attr('src', $.fn.clusters.defaults.bunch_images.get(bobj));
@@ -221,7 +235,6 @@
   $.fn.clusters.get_marker_img = function(container){
     return $(container).find('img').eq(0).attr('src');
   };
-
 
 
 })(jQuery);

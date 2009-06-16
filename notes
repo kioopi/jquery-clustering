@@ -8,3 +8,8 @@
   * also different images based on how many markers are clustered should be standard functionality
 
   * the markers collected in a bunch should be appended to the bunch's node as an ul, to enable interactivity down the way.
+
+
+  * mr.crockford thinks inheritance via the new operator isn't cool. 
+    right, now it works, though.
+    http://javascript.crockford.com/prototypal.html
