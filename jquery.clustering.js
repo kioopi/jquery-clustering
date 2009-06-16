@@ -15,9 +15,6 @@
 
 
   /* private functions */
- 
-  
-
   function collect_markers(ul){
        // accepts a jquery object
        // collects data (from ul), returns a list of objects
@@ -51,17 +48,14 @@
           var bunch=bunches[b];
           if(dist(marker,bunch)<radius){
               // add marker to bunch
-              bunch.markers.push(marker);
-              bunch.update_center();
+              bunch.add_marker(marker);
               bunched = true;
               break;
           }
        } // endfor bunches
        if(!bunched){
           var bunch = new $.fn.clusters.Bunch(); 
-          bunch.markers.push(marker);
-          bunch.x = marker.x;
-          bunch.y = marker.y;
+          bunch.add_marker(marker);
           bunches.push(bunch);
        }
      } // endfor markers
@@ -122,6 +116,12 @@
       this.x = this.markers.sum('x') / this.markers.length;
       this.y = this.markers.sum('y') / this.markers.length;
   }
+
+  $.fn.clusters.Bunch.prototype.add_marker = function(marker){  
+      this.markers.push(marker);
+      this.update_center(); 
+  }; 
+  
 
   /* public functions */
 
