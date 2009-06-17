@@ -1,5 +1,8 @@
 
   * The creation of marker objects in collect_markers needs revisiting. Some more flexibility in gathering the info should be introduced.
+  
+     * add the same technique for marker gathering as for bunch-node-creation, users can register functions that get the marker-li-dom-node and the marker js-object and can parse the node and add info to the object.  this object is the same that will be passed to bunch-creation. 
+
 
   * Dito for the creation of bunch-objects in cluster. Some form of prototype-based aproach comes to mind since these objects contain functions. 
 
@@ -8,6 +11,8 @@
   * also different images based on how many markers are clustered should be standard functionality
 
   * the markers collected in a bunch should be appended to the bunch's node as an ul, to enable interactivity down the way.
+
+  
 
 
   * mr.crockford thinks inheritance via the new operator isn't cool. 
