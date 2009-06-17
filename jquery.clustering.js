@@ -49,13 +49,14 @@
        // interates over markes generates clusters based on priximity
        // returns an array with clusters
        radius = radius || $.fn.clusters.defaults.radius;
-       dist = $.fn.clusters.distance_func;
+       var dist = $.fn.clusters.distance_func;
        var bunches = [];
+       var bunch;
        for(var m=0; m<markers.length; m++){
        var marker = markers[m];
        var bunched = false;
        for(var b=0; b<bunches.length; b++){
-          var bunch=bunches[b];
+          bunch=bunches[b];
           if(dist(marker,bunch)<radius){
               // add marker to bunch
               bunch.add_marker(marker);
@@ -64,7 +65,7 @@
           }
        } // endfor bunches
        if(!bunched){
-          var bunch = new $.fn.clusters.Bunch(); 
+          bunch = new $.fn.clusters.Bunch(); 
           bunch.add_marker(marker);
           bunches.push(bunch);
        }
@@ -81,17 +82,37 @@
         
        var brep = $('<span>');
  
+       // iterate over the representational funcs and let them do their thing
        $.each($.fn.clusters.defaults.representation, function(i,func){
           func(brep, bunch);
        });
+
+       bnode.append(brep);
  
-       return bnode.append(brep);
+       // append an ul with all the clustered markers  
+       // in order to minize information loss
+       var markers = $('<ul>').css('display', 'none');  
+       for(var i=0, j=bunch.markers.length; i<j; i++){
+          var m = bunch.markers[i];
+          var li = $('<li>').css({width:'2em', height:'2em',
+                    left: m.x+'em', top: (m.y*-1)+'em' });
+          if(m.img){ 
+            li.append($('<img>').attr('src', m.img.src)
+                                .attr('alt', m.img.alt)
+                                .attr('title', m.img.title));  
+          } 
+          markers.append(li);
+       } 
+       bnode.append(markers);
+
+       
+       return bnode;
   }
  
   /* plugin definition */
  
   $.fn.clusters = function(options){
-     opts = $.extend($.fn.clusters.defaults, options);
+     var opts = $.extend($.fn.clusters.defaults, options);
      return this.each(function() {
         var container = $(this);
         if(!opts.marker_image){
