@@ -19,27 +19,19 @@
        // accepts a jquery object
        // collects data (from ul), returns a list of objects
        
-       // TODO: this function should collect marker information more flexible
-       // for example save the original img.src or possible labels
-       // maybe data-gathering should be overridable by the user.
        var markers = [];
        ul.find($.fn.clusters.defaults.positioned_subelement).each(function(id){
-          var that = $(this);
-          var m = { id:id,
-                    x:parseFloat(that.css('left')),
-                    y:-1*parseFloat(that.css('top'))
+          var marker = $(this);
+          var mobj = { id:id,
+                    x:parseFloat(marker.css('left')),
+                    y:-1*parseFloat(marker.css('top'))
                   }
 
-          // check if there is an img and add its data 
-          var img = that.find('img'); 
-          if(img.length){ 
-             m.img = { 
-                alt : img.attr('alt'),
-                title : img.attr('title'),
-                src : img.attr('src')
-             } 
-          } 
-          markers.push(m);
+          // iterate over the collector funcs and let them do their thing
+          $.each($.fn.clusters.defaults.collectors, function(i,func){
+              mobj = func(marker, mobj);
+          });
+          markers.push(mobj);
        });
        return markers;
   }
@@ -82,8 +74,8 @@
         
        var brep = $('<span>');
  
-       // iterate over the representational funcs and let them do their thing
-       $.each($.fn.clusters.defaults.representation, function(i,func){
+       // iterate over the display funcs and let them do their thing
+       $.each($.fn.clusters.defaults.displayers, function(i,func){
           func(brep, bunch);
        });
 
@@ -110,7 +102,6 @@
   }
  
   /* plugin definition */
- 
   $.fn.clusters = function(options){
      var opts = $.extend($.fn.clusters.defaults, options);
      return this.each(function() {
@@ -155,9 +146,23 @@
   
 
   /* public functions */
-
+  $.fn.clusters.collectors = {
+      single_image : function(marker, obj){ 
+          // check if there is an img and add its data 
+          var img = marker.find('img'); 
+          if(img.length){ 
+             obj.img = { 
+                alt : img.attr('alt'),
+                title : img.attr('title'),
+                src : img.attr('src')
+             } 
+          } 
+          return obj;
+      } 
+ 
+  }; 
   
-  $.fn.clusters.bunchfuncs = {
+  $.fn.clusters.displayers = {
     // the functions in this objects all accept a dom node and a bunch object.
     // the dome node is the positioned element reprsenting the marker on the map
     // the contents of this node can be altered in these functions to customise the representation of the bunch
@@ -241,9 +246,12 @@
          6:'xxlarge.png'
       },
 
+
+      collectors: [$.fn.clusters.collectors.single_image  ], 
+
       // an array of functions that act on the dom-representation of a bunch
       // 1st arg: dom-node, 2nd arg: bunch-object
-      representation: [$.fn.clusters.bunchfuncs.label, $.fn.clusters.bunchfuncs.style, $.fn.clusters.bunchfuncs.multi_image]
+      displayers: [$.fn.clusters.displayers.label, $.fn.clusters.displayers.style, $.fn.clusters.displayers.multi_image]
       // [ bunch_pure_css ]
   };
 
