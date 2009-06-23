@@ -6,6 +6,31 @@ This plugin takes a List (i.e an unordered List) with positioned (via css) eleme
 
 This is way alpha!
 
+
+
+
+The clustering works in three steps: 
+
+  1) Collecting the markerdata. 
+   * In the  markers are collected by a jquery-selector in the function collect_markers.   
+     For each marker one object is created to encapsulate all the necessary information about the marker.  To have flexiblity in that matter it's possible to register collector functions.  Each collector function will be called for each marker and will be passed the marker as a jquery-object and the data-object. The function can manipulate the data-object and is to return the altered version.
+     There are some standard functions ready to use in $.fn.clusters.collectors
+
+
+  2) Creating clusters.
+
+The clusters are generated automaticly.  For each cluster there is a object with its data inlcuding an array ('markers') of  the markers clustered together in this bunch. 
+The fuction is called cluster
+
+  3) Displaying the clusters. 
+
+  Works simillar to 1) but reversed. Described more detailed below.  
+
+  
+
+
+
+
 Usage 
 ------------------------------------------------------------------
 
@@ -56,11 +81,11 @@ How to alter the appearance of bunches on the Map?
 
 The bunches are positioned by jquery-clustering. The positioned Dom-Nodes (usually <li>s) don't contain style information apart from position. 
 
-To control the representation of a bunch functions that act on the Dom-Node will be called by jquery-clustering.  Each function will be passed the dom-node representing the bunch as the first argument and the actuall bunch object as the second argument. 
-The functions that are called are the ones in the array $.fn.clusters.default.representation. 
+To control the representation of a bunch functions that act on the Dom-Node will be called by jquery-clustering.  Each function will be passed the dom-node representing the bunch as the first argument and the actual bunch object as the second argument. 
+The functions that are called are the ones in the array $.fn.clusters.default.displayer.
 
-There are a couple of representation-functions in $.fn.clusters.bunchfuncs
-Put them into $.fn.clusters.default.representation like in the demo to try them out.
+There are a couple of representation-functions in $.fn.clusters.displayers
+Put them into $.fn.clusters.default.displayers like in the demo to try them out.
 
 
 

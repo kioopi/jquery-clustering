@@ -67,6 +67,7 @@
   
   function bunch_node(bunch, node_type){
        // builds a dom-dom node for a given bunch
+       // FIXME this shouldn't neccessary be in ems;
        node_type = node_type || $.fn.clusters.defaults.positioned_subelement;
        var bnode = $('<'+node_type+'>').css({width:'2em', height:'2em',
                                left: bunch.x+'em', top: (bunch.y*-1)+'em' });
