@@ -4,7 +4,7 @@ jQuery Clusting Plugin - By Vangelis Tsoumenis
 
 This plugin takes a List (i.e an unordered List) with positioned (via css) elements and clusters them by proximity.
 
-This is way alpha!
+This is a little Beta.
 
 
 
@@ -90,3 +90,8 @@ Put them into $.fn.clusters.default.displayers like in the demo to try them out.
 
 
 
+
+====== Participants ======
+
+* Vangelis Tsoumenis 
+* and you? 
