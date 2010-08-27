@@ -38,7 +38,7 @@ Usage
 HTML:
 
 <ul id="mymap"> 
-  <li style="left:1.2em; top:1emi;">Marker 1</li>
+  <li style="left:1.2em; top:1em;">Marker 1</li>
   <li style="left:0.3em; top:1.4em;">Marker 2</li>
   <li style="left:2.3em; top:1.7em;">Marker 3</li>
 </ul> 
