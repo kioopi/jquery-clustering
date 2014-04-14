@@ -1,38 +1,29 @@
-jQuery Clusting Plugin - By Vangelis Tsoumenis
-===================================================================
+jQuery Clusting Plugin
+======================
 
 
-This plugin takes a List (i.e an unordered List) with positioned (via css) elements and clusters them by proximity.
-
-This is a little Beta.
-
-
-
+This plugin takes a List (i.e an unordered List) with positioned (via CSS) elements and clusters them by proximity.
 
 The clustering works in three steps: 
 
   1) Collecting the markerdata. 
-   * In the  markers are collected by a jquery-selector in the function collect_markers.   
-     For each marker one object is created to encapsulate all the necessary information about the marker.  To have flexiblity in that matter it's possible to register collector functions.  Each collector function will be called for each marker and will be passed the marker as a jquery-object and the data-object. The function can manipulate the data-object and is to return the altered version.
+   * The markers are collected by a jquery-selector by the function collect_markers.   
+     For each marker one object is created to encapsulate all the necessary information about the marker.  To have flexiblity in that matter it's possible to register collector functions.  Each collector function will be called for each marker and will be passed the marker as a jquery-object and the data-object. The function can manipulate the data-object and is expeced to return the altered version.
      There are some standard functions ready to use in $.fn.clusters.collectors
 
 
   2) Creating clusters.
 
-The clusters are generated automaticly.  For each cluster there is a object with its data inlcuding an array ('markers') of  the markers clustered together in this bunch. 
+The clusters are generated automatically. For each cluster there is an object with its data including an array ('markers') of the markers clustered together in this bunch. 
 The fuction is called cluster
 
   3) Displaying the clusters. 
 
   Works simillar to 1) but reversed. Described more detailed below.  
 
-  
-
-
-
 
 Usage 
-------------------------------------------------------------------
+-----
 
 
 HTML:
@@ -86,8 +77,6 @@ The functions that are called are the ones in the array $.fn.clusters.default.di
 
 There are a couple of representation-functions in $.fn.clusters.displayers
 Put them into $.fn.clusters.default.displayers like in the demo to try them out.
-
-
 
 
 
